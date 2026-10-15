@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 576" fill="none" role="img" aria-labelledby="title description">
+  <title id="title">Smart Parking 시스템 구성도</title>
+  <desc id="description">Arduino UNO와 ESP-01 다섯 대가 Wi-Fi와 TCP로 C++ 서버에 연결된다. 서버에는 번호판 촬영용 Android 앱과 관제·주차 위치 확인용 웹 화면이 연결된다. 최종 저장소 문서를 바탕으로 재구성했으며 실제 장치 사진이 아니다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="#587c6f"/></marker>
+  </defs>
+  <rect width="960" height="576" fill="#eaf0eb"/>
+  <g font-family="ui-monospace,monospace" fill="#285e50">
+    <text x="40" y="58" font-size="20" letter-spacing="2">SMART PARKING</text>
+    <text x="40" y="98" font-size="22" fill="#4e685b">Devices · Communication · Control</text>
+  </g>
+  <g stroke="#587c6f" stroke-width="2.5" marker-start="url(#arrow)" marker-end="url(#arrow)">
+    <path d="M285 310H352"/>
+    <path d="M608 310H642V222H672"/>
+    <path d="M608 310H642V414H672"/>
+  </g>
+  <g fill="#f8faf7" stroke="#a3b8ac" stroke-width="1.5">
+    <rect x="40" y="210" width="240" height="200" rx="8"/>
+    <rect x="360" y="210" width="240" height="200" rx="8"/>
+    <rect x="680" y="154" width="240" height="136" rx="8"/>
+    <rect x="680" y="346" width="240" height="136" rx="8"/>
+  </g>
+  <g font-family="ui-monospace,monospace" text-anchor="middle" fill="#285e50">
+    <text x="160" y="252" font-size="20" fill="#4e685b">5 DEVICE NODES</text>
+    <text x="160" y="300" font-size="26">Arduino UNO</text>
+    <text x="160" y="338" font-size="26">+ ESP-01</text>
+    <text x="160" y="382" font-size="18" fill="#4e685b">Sensors / Actuators</text>
+    <text x="480" y="252" font-size="20" fill="#4e685b">SERVER</text>
+    <text x="480" y="308" font-size="32">C++11</text>
+    <text x="480" y="354" font-size="20">Parking logic</text>
+    <text x="480" y="386" font-size="18" fill="#4e685b">Device commands</text>
+    <text x="800" y="210" font-size="27">Android</text>
+    <text x="800" y="250" font-size="19" fill="#4e685b">Plate capture</text>
+    <text x="800" y="402" font-size="27">Web</text>
+    <text x="800" y="442" font-size="19" fill="#4e685b">Monitor / Location</text>
+    <text x="320" y="446" font-size="19" fill="#4e685b">Wi-Fi / TCP</text>
+  </g>
+  <text x="40" y="540" font-family="ui-monospace,monospace" font-size="17" fill="#4e685b">SYSTEM DIAGRAM · BASED ON FINAL REPOSITORY DOCUMENTATION</text>
+</svg>

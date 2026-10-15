@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../lib/content';
+import { withBase } from '../lib/urls';
+interface Props { project: Project; }
+const { project } = Astro.props;
+const { data } = project;
+const status = { completed: 'Completed', 'in-progress': 'In Progress', experiment: 'Experiment' };
+---
+
+<article class="project-card">
+  <a class="project-card-link" href={withBase(`/projects/${project.id}/`)}>
+    {data.thumbnail && <div class="project-card-image"><Image src={data.thumbnail} alt={data.thumbnailAlt!} width={720} height={432} loading="lazy" /></div>}
+    <div class="project-card-body">
+      <div class="card-meta">
+        {data.category && <span>{data.category}</span>}
+        {data.sample && <span class="sample-label">Sample</span>}
+        {data.status && <span>{status[data.status]}</span>}
+      </div>
+      <h3>{data.title}</h3>
+      <p>{data.description}</p>
+      {data.stack.length > 0 && <ul class="tags" aria-label="핵심 기술">{data.stack.slice(0, 4).map((tag) => <li>{tag}</li>)}</ul>}
+      {(data.period || data.type || data.role.length > 0) && <dl class="card-details">
+        {data.period && <div><dt>기간</dt><dd>{data.period}</dd></div>}
+        {data.type && <div><dt>유형</dt><dd>{data.type === 'team' ? '팀 프로젝트' : '개인 프로젝트'}</dd></div>}
+        {data.role.length > 0 && <div><dt>참여 범위</dt><dd>{data.role.join(' · ')}</dd></div>}
+      </dl>}
+      <span class="card-action">프로젝트 상세 <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+</article>

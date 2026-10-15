@@ -1,0 +1,11 @@
+---
+interface Props { kind?: 'project' | 'post'; }
+const { kind = 'project' } = Astro.props;
+---
+
+<aside class="sample-notice" aria-label="예시 콘텐츠 안내">
+  <strong>Sample / Placeholder</strong>
+  <p>{kind === 'project'
+    ? '페이지 구성을 확인하기 위한 예시입니다. 개인 기여, 기간, 구현 결과와 성능을 확인한 실제 case study가 아닙니다.'
+    : '글의 구성을 확인하기 위한 작성 예시입니다. 아래 내용과 날짜는 실제 실험 기록이 아닙니다.'}</p>
+</aside>

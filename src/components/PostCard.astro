@@ -1,0 +1,20 @@
+---
+import type { Post } from '../lib/content';
+import { formatDate } from '../lib/format';
+import { withBase } from '../lib/urls';
+interface Props { post: Post; compact?: boolean; }
+const { post, compact = false } = Astro.props;
+---
+
+<article class:list={['post-card', { compact }]}>
+  <div class="post-card-meta">
+    {post.data.sample ? <span class="sample-label">Sample · 예시 날짜</span> : null}
+    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    {post.data.category && <span>{post.data.category}</span>}
+  </div>
+  <div>
+    <h3><a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a></h3>
+    <p>{post.data.description}</p>
+    {!compact && post.data.tags.length > 0 && <ul class="tags" aria-label="태그">{post.data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+  </div>
+</article>

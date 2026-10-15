@@ -1,0 +1,43 @@
+<button class="theme-toggle" type="button" aria-label="다크 모드로 전환" aria-pressed="false" hidden>
+  <svg class="theme-icon-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <path d="M20.5 13.5A8.5 8.5 0 0 1 10.5 3.5a8.5 8.5 0 1 0 10 10Z" />
+  </svg>
+  <svg class="theme-icon-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+  </svg>
+  <span class="sr-only">테마 변경</span>
+</button>
+
+<style>
+  .theme-icon-sun { display: none; }
+  :global(:root[data-theme='dark']) .theme-icon-moon { display: none; }
+  :global(:root[data-theme='dark']) .theme-icon-sun { display: block; }
+</style>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  let preference: string | null = null;
+  try { preference = localStorage.getItem('theme'); } catch { /* Storage can be disabled. */ }
+  if (preference !== 'light' && preference !== 'dark') preference = null;
+
+  const apply = (theme: string) => {
+    root.dataset.theme = theme;
+    button?.setAttribute('aria-pressed', String(theme === 'dark'));
+    button?.setAttribute('aria-label', theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환');
+  };
+  apply(preference ?? (media.matches ? 'dark' : 'light'));
+  if (button) {
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      preference = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      apply(preference);
+      try { localStorage.setItem('theme', preference); } catch { /* Keep the session preference. */ }
+    });
+  }
+  media.addEventListener('change', (event) => {
+    if (!preference) apply(event.matches ? 'dark' : 'light');
+  });
+</script>

@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedContent } from '../../lib/content';
+const { posts } = await getPublishedContent();
+---
+<BaseLayout title="Blog" description="공부, 실험, 구현 과정과 디버깅을 기록하는 Engineering Blog.">
+  <div class="container">
+    <header class="page-header"><p class="eyebrow">Engineering Notes</p><h1>Blog</h1><p class="page-description">공부한 내용, 확인한 동작,<br />문제를 좁혀 가는 과정을 기록합니다.</p></header>
+    {posts.some((post) => post.data.sample) && <aside class="sample-notice"><strong>Sample / Placeholder</strong><p>Sample 표시는 작성 형식을 확인하기 위한 예시입니다. 실제 실험 기록이나 성과가 아닙니다.</p></aside>}
+    <section aria-labelledby="notes-title"><h2 id="notes-title" class="sr-only">전체 기술 기록</h2>{posts.length > 0 ? posts.map((post) => <PostCard post={post} />) : <p class="empty-state">첫 기록을 준비하고 있습니다.</p>}</section>
+  </div>
+</BaseLayout>

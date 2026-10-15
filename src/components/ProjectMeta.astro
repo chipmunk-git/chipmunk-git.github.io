@@ -1,0 +1,17 @@
+---
+import type { Project } from '../lib/content';
+interface Props { project: Project; }
+const { project: { data } } = Astro.props;
+const hasMetadata = Boolean(data.period || data.type || data.team || data.role.length || data.stack.length || data.repository);
+---
+
+{hasMetadata && (
+  <dl class="project-meta">
+    {data.period && <div><dt>기간</dt><dd>{data.period}</dd></div>}
+    {data.type && <div><dt>유형</dt><dd>{data.type === 'team' ? '팀 프로젝트' : '개인 프로젝트'}</dd></div>}
+    {data.team && <div><dt>참여 인원</dt><dd>{data.team}명</dd></div>}
+    {data.role.length > 0 && <div><dt>나의 참여 범위</dt><dd>{data.role.join(' · ')}</dd></div>}
+    {data.stack.length > 0 && <div><dt>사용 기술</dt><dd><ul class="meta-stack">{data.stack.map((tag) => <li>{tag}</li>)}</ul></dd></div>}
+    {data.repository && <div><dt>저장소</dt><dd><a href={data.repository}>GitHub ↗</a></dd></div>}
+  </dl>
+)}

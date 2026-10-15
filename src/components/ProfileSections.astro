@@ -1,0 +1,79 @@
+---
+import { profile } from '../config/profile';
+
+// 사용자 요청: Skills 경험 설명·활동·Currently Learning은 표시하지 않습니다.
+// 관련 데이터는 config에 보존하며, 다시 표시할 때 사용자 의사를 확인합니다.
+
+const sections = [
+  { id: 'education', title: '학력', entries: profile.education },
+  { id: 'certifications', title: '자격증', entries: profile.certifications },
+  { id: 'training', title: '교육', entries: profile.training },
+  { id: 'military', title: '병역', entries: profile.military },
+  { id: 'skills', title: '기술', entries: profile.skills },
+];
+
+const skillGroups = [...new Set(profile.skills.map((skill) => skill.category))].map((category) => ({
+  category,
+  entries: profile.skills.filter((skill) => skill.category === category),
+}));
+---
+
+<section class="portfolio-section" aria-labelledby="profile-title">
+  <h2 id="profile-title">프로필</h2>
+  <p class="profile-background">
+    {profile.background.map((line, index) => (
+      <>
+        {index > 0 && <br />}
+        {line}
+      </>
+    ))}
+  </p>
+  <dl class="profile-information">
+    <div>
+      <dt>생년월일</dt>
+      <dd>{profile.birthDate || <span class="profile-pending">입력 예정</span>}</dd>
+    </div>
+    <div>
+      <dt>이메일</dt>
+      <dd>{profile.email ? <a href={`mailto:${profile.email}`}>{profile.email}</a> : <span class="profile-pending">입력 예정</span>}</dd>
+    </div>
+  </dl>
+</section>
+
+<div class="resume-grid">
+  {sections.map((section) => (
+    <section class="portfolio-section resume-section" aria-labelledby={`${section.id}-title`}>
+      <h2 id={`${section.id}-title`}>{section.title}</h2>
+      {section.entries.length > 0 ? section.id === 'skills' ? (
+        <>
+          <div class="skill-groups">
+            {skillGroups.map((group, index) => (
+              <div class="skill-group">
+                <h3 id={`skills-category-${index}`}>{group.category}</h3>
+                <ul class="skills-list" aria-labelledby={`skills-category-${index}`}>
+                  {group.entries.map((entry) => <li>{entry.title}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <ul class="resume-entries">
+          {section.entries.map((entry) => (
+            <li>
+              <h3>{entry.title}</h3>
+              {(entry.organization || entry.period) && (
+                <p class="resume-entry-meta">
+                  {entry.organization && <span>{entry.organization}</span>}
+                  {entry.period && <span>{entry.period}</span>}
+                </p>
+              )}
+              {entry.description && <p class="resume-entry-description">{entry.description}</p>}
+            </li>
+          ))}
+        </ul>
+      ) : <p class="profile-pending">입력 예정</p>}
+    </section>
+  ))}
+</div>
+

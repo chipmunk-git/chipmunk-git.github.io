@@ -1,0 +1,24 @@
+---
+import { site } from '../config/site';
+import { withBase } from '../lib/urls';
+import ThemeToggle from './ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (path: string) => {
+  const target = withBase(path).replace(/\/$/, '') || '/';
+  return path === '/' ? currentPath === target : currentPath === target || currentPath.startsWith(`${target}/`);
+};
+---
+
+<header class="site-header container">
+  <a class="wordmark" href={withBase('/')} aria-label={`${site.displayName} 홈`}>
+    <span class="wordmark-symbol" aria-hidden="true">[ ]</span>{site.displayName}
+  </a>
+  <nav aria-label="주요 메뉴">
+    {site.navigation.map((item) => (
+      <a href={withBase(item.path)} aria-current={isActive(item.path) ? 'page' : undefined}>{item.label}</a>
+    ))}
+    {site.githubUrl && <a href={site.githubUrl}>GitHub <span aria-hidden="true">↗</span></a>}
+  </nav>
+  <ThemeToggle />
+</header>

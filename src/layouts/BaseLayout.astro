@@ -1,0 +1,57 @@
+---
+import { site } from '../config/site';
+import { absoluteUrl, withBase } from '../lib/urls';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import '../styles/prose.css';
+
+interface Props { title?: string; description?: string; noindex?: boolean; }
+const { title, description = site.description, noindex = false } = Astro.props;
+const pageTitle = title ? `${title} — ${site.displayName}` : site.title;
+const configuredSite = new URL(site.url).hostname !== 'example.com';
+const base = withBase('/');
+const pathname = Astro.url.pathname;
+const pagePath = base !== '/' && pathname.startsWith(base) ? pathname.slice(base.length - 1) : pathname;
+const canonical = absoluteUrl(pagePath);
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {site.author && <meta name="author" content={site.author} />}
+    {(noindex || !configuredSite) && <meta name="robots" content="noindex, nofollow" />}
+    {configuredSite && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {configuredSite && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch { /* System theme is the fallback. */ }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <Header />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+    <script>
+      document.querySelectorAll<HTMLElement>('.prose pre, .prose table').forEach((element) => {
+        element.tabIndex = 0;
+        element.setAttribute('aria-label', element.tagName === 'PRE' ? '코드 블록, 긴 줄은 좌우로 스크롤할 수 있습니다' : '표, 내용이 넓으면 좌우로 스크롤할 수 있습니다');
+      });
+    </script>
+  </body>
+</html>

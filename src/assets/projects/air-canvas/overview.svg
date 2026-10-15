@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 432" fill="none">
+  <title>Air Canvas 처리 단계 개념도 예시</title><desc>카메라 입력, 색상 검출, 캔버스의 연결을 설명하는 Sample diagram이며 실제 실행 화면이 아니다.</desc>
+  <rect width="720" height="432" fill="#eef0ed"/>
+  <rect x="64" y="125" width="210" height="184" rx="6" fill="#f8faf7" stroke="#a3b8ac"/>
+  <circle cx="169" cy="205" r="33" stroke="#719685" stroke-width="2"/><circle cx="169" cy="205" r="12" fill="#c4d9cb"/>
+  <path d="M298 219H384m-10-8 10 8-10 8" stroke="#719685" stroke-width="2"/>
+  <rect x="406" y="100" width="250" height="234" rx="6" fill="#f8faf7" stroke="#a3b8ac"/>
+  <path d="M442 268c28-77 43-112 67-64s38 50 55 0 36-33 48-47" stroke="#4c8871" stroke-width="4" stroke-linecap="round"/>
+  <g font-family="ui-monospace,monospace" fill="#4e685b"><text x="36" y="42" font-size="12">VISION CONCEPT</text><text x="120" y="287" font-size="14">CAMERA INPUT</text><text x="434" y="130" font-size="13">COLOR → CANVAS</text><text x="36" y="398" font-size="12">SAMPLE DIAGRAM · NOT AN EXECUTION RESULT</text></g>
+</svg>

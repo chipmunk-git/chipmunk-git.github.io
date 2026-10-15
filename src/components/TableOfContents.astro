@@ -1,0 +1,10 @@
+---
+import type { MarkdownHeading } from 'astro';
+interface Props { headings: MarkdownHeading[]; }
+const headings = Astro.props.headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{headings.length > 0 && <nav class="toc" aria-label="본문 목차">
+  <p class="eyebrow">On this page</p>
+  <ol>{headings.map((heading) => <li class:list={{ 'toc-nested': heading.depth === 3 }}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol>
+</nav>}

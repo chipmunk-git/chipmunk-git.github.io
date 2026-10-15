@@ -1,0 +1,15 @@
+---
+import { site } from '../config/site';
+import { withBase } from '../lib/urls';
+---
+
+<footer class="site-footer container">
+  <div><p class="footer-name">{site.displayName}</p><p>Embedded · Robotics · Engineering Notes</p></div>
+  <nav aria-label="푸터 링크">
+    {site.navigation.map((item) => (
+      <a href={withBase(item.path)}>{item.label}</a>
+    ))}
+    {site.githubUrl && <a href={site.githubUrl}>GitHub ↗</a>}
+    {site.socialLinks.map((link) => <a href={link.url}>{link.label} ↗</a>)}
+  </nav>
+</footer>
